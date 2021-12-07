@@ -12,11 +12,11 @@ const IndexUsuarios = () => {
         console.log("data servidor", data)
     }, [data]);
 
-    useEffect(() =>{
+    useEffect(() => {
         if (error) {
             toast.error("Error consultando los usuarios");
         }
-    })
+    });
 
     if (loading) return <div>Cargando...</div>
     return (
@@ -46,10 +46,10 @@ const IndexUsuarios = () => {
                                         <td>{u.rol}</td>
                                         <td>{u.estado}</td>
                                         <td>
-                        <Link to={`/usuarios/editar/${u._id}`}>
-                          <i className='fas fa-pen text-yellow-600 hover:text-yellow-400 cursor-pointer' />
-                        </Link>
-                      </td>
+                                            <Link to={`/usuarios/editar/${u._id}`}>
+                                                <i className="fas fa-edit">Editar</i>
+                                            </Link>
+                                        </td>
                                     </tr>
                                 );
                             })}

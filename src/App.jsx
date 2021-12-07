@@ -11,7 +11,7 @@ import EditarUsuario from './pages/usuarios/editar';
 // })
 
 const client = new ApolloClient({
-  uri: "https://servidor-gql-soulweb.herokuapp.com/graphql",
+  uri: 'https://servidor-gql-soulweb.herokuapp.com/graphql',
   cache: new InMemoryCache()
 })
 
