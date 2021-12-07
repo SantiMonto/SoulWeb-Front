@@ -1,51 +1,31 @@
 import './App.css';
+import './styles/tabla.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client";
+import IndexUsuarios from './pages/usuarios';
+import EditarUsuario from './pages/usuarios/editar';
+
+
+// const httpLink = createHttpLink({
+//   uri: "https://servidor-gql-soulweb.herokuapp.com/graphql"
+// })
+
+const client = new ApolloClient({
+  uri: "https://servidor-gql-soulweb.herokuapp.com/graphql",
+  cache: new InMemoryCache()
+})
 
 function App() {
   return (
-    <div className="App">
-      <div className="card container container-fluid">
-        <h3 className="text-center text-black pt-5">Registro</h3>
-        <form>
-          <div class="mb-3 container">
-            <label for="TextInput" className="form-label">Nombre completo:</label>
-            <input type="text" id="nombre" className="form-control"
-              placeholder="Ingrese su nombre completo"
-            />
-          </div>
+    <ApolloProvider client={client}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/usuarios" element={<IndexUsuarios />} />
+            <Route path="/usuarios/editar/:_id" element={<EditarUsuario />} />
+          </Routes>
+        </BrowserRouter>
+    </ApolloProvider>
 
-          <div class="mb-3 container">
-            <label for="TextInput" className="form-label">Correo:</label>
-            <input type="text" id="email" className="form-control"
-              placeholder="Ingrese su correo"
-            />
-          </div>
-
-          <div className="mb-3 container">
-            <label for="TextInput" className="form-label">Contraseña:</label>
-            <input type="password" id="password" className="form-control"
-              placeholder="Ingrese su contraseña con al menos 6 digitos"
-            />
-          </div>
-
-          <div class="mb-3 container">
-            <label for="TextInput" className="form-label">Rol:</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Seleccionar Rol</option>
-              <option value="Lider">Lider</option>
-              <option value="Estudiante">Estudiante</option>
-              <option value="Administrador">Administrador</option>
-            </select>
-          </div>
-
-          <div className="container mx-auto">
-            <button type="submit" className="btn btn-dark "
-            >Registrar</button>
-            <button type="reset" className="btn btn-dark"
-            >Cancelar</button>
-          </div>
-        </form>
-      </div>
-    </div>
   );
 }
 
