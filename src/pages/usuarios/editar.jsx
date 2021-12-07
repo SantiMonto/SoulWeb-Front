@@ -7,13 +7,14 @@ import ButtonLoading from '../../components/ButtonLoading';
 import useFormData from '../../hook/useFormData';
 import { EDITAR_USUARIO } from '../../graphql/usuarios/mutations';
 import { toast } from 'react-toastify';
-// import DropDown from 'components/Dropdown';
-// import { Enum_EstadoUsuario } from 'utils/enums';
+import DropDown from '../../components/Dropdown';
+import { Enum_EstadoUsuario } from '../../utilis/enum';
 
 const EditarUsuario = () => {
     const { form, formData, updateFormData } = useFormData(null);
     const { _id } = useParams();
-    const { data: queryData,
+    const {
+        data: queryData,
         error: queryError,
         loading: queryLoading,
     } = useQuery(GET_USUARIO, {
@@ -27,25 +28,25 @@ const EditarUsuario = () => {
         e.preventDefault();
         console.log('fs', formData)
         editarUsuario({
-            variables: { _id,...formData }
+            variables: { _id, ...formData }
         });
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         if (mutationData) {
             toast.success("Usuario modificado con exito")
         }
-        console.log('Mutacion edicion',mutationData)
-    },[mutationData]);
+        console.log('Mutacion edicion', mutationData)
+    }, [mutationData]);
 
     useEffect(() => {
         if (mutationError) {
             toast.error("Error modificando el usuario");
         }
-        if(queryError){
+        if (queryError) {
             toast.error("Error modificando el usuario");
         }
-    },[queryError,mutationError]);
+    }, [queryError, mutationError]);
 
     if (queryLoading) return <div>Cargando...</div>
 
@@ -89,13 +90,13 @@ const EditarUsuario = () => {
                     defaultValue={queryData.Usuario.identificacion}
                     required={true}
                 />
-                {/* <DropDown
-          label='Estado de la persona:'
-          name='estado'
-          defaultValue={queryData.Usuario.estado}
-          required={true}
-          options={Enum_EstadoUsuario}
-        /> */}
+                <DropDown
+                    label='Estado de la persona:'
+                    name='estado'
+                    defaultValue={queryData.Usuario.estado}
+                    required={true}
+                    options={Enum_EstadoUsuario}
+                />
                 <span>Rol del usuario: {queryData.Usuario.rol}</span>
                 <ButtonLoading
                     disabled={Object.keys(formData).length === 0}
