@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client";
 import IndexUsuarios from './pages/usuarios';
 import EditarUsuario from './pages/usuarios/editar';
+import AuthLayout from './layouts/AuthLayout';
+import Registro from './pages/auth/Registro';
 
 
 // const httpLink = createHttpLink({
@@ -22,6 +24,9 @@ function App() {
           <Routes>
             <Route path="/usuarios" element={<IndexUsuarios />} />
             <Route path="/usuarios/editar/:_id" element={<EditarUsuario />} />
+            <Route path="/auth" element={<AuthLayout />}>
+              <Route path="registro" element={<Registro />} />
+            </Route>
           </Routes>
         </BrowserRouter>
     </ApolloProvider>
