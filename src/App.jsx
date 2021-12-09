@@ -6,6 +6,7 @@ import IndexUsuarios from './pages/usuarios';
 import EditarUsuario from './pages/usuarios/editar';
 import AuthLayout from './layouts/AuthLayout';
 import Registro from './pages/auth/Registro';
+import Login from './pages/auth/Login';
 
 
 // const httpLink = createHttpLink({
@@ -26,6 +27,7 @@ function App() {
             <Route path="/usuarios/editar/:_id" element={<EditarUsuario />} />
             <Route path="/auth" element={<AuthLayout />}>
               <Route path="registro" element={<Registro />} />
+              <Route path="login" element={<Login />} />
             </Route>
           </Routes>
         </BrowserRouter>
