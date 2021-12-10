@@ -9,8 +9,10 @@ import { useMutation } from '@apollo/client';
 import { REGISTRO } from '../../graphql/auth/mutations';
 import { useEffect } from 'react/cjs/react.development';
 import {useNavigate} from 'react-router';
+import { useAuth } from '../../context/authContext';
 
 const Registro = () => {
+    const {setToken} = useAuth();
     const navigate = useNavigate();
     const { form, formData, updateFormData } = useFormData();
 
@@ -29,7 +31,7 @@ const Registro = () => {
         console.log('DataMutation', dataMutation);
         if (dataMutation) {
             if (dataMutation.registro.token) {
-                localStorage.setItem("token", dataMutation.registro.token)
+                setToken("token", dataMutation.registro.token)
                 navigate('/');
             };
         };

@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react/cjs/react.development';
 import ButtonLoading from '../../components/ButtonLoading';
 import Input from '../../components/input';
+import { useAuth } from '../../context/authContext';
 import { LOGIN } from '../../graphql/auth/mutations';
 import useFormData from '../../hook/useFormData';
+import {useNavigate} from 'react-router';
 
 const Login = () => {
+    const {setToken} = useAuth();
+    const navigate = useNavigate();
     const { form, formData, updateFormData } = useFormData();
 
     const [login, { data: mutationData, loading: mutationLoading, error: mutationError }] =
@@ -23,9 +27,13 @@ const Login = () => {
 
     useEffect(()=>{
         if(mutationData){
+            if (mutationData.login.token) {
+                setToken("token", mutationData.login.token)
+                navigate('/');
+            };
             console.log(mutationData)
         }
-    },[mutationData])
+    },[mutationData,setToken,navigate])
     return (
         <div className='flex flex-col items-center justify-center w-full h-full p-10'>
             <h1 className='text-xl font-bold text-gray-900'>Iniciar sesión</h1>

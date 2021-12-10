@@ -7,6 +7,8 @@ import EditarUsuario from './pages/usuarios/editar';
 import AuthLayout from './layouts/AuthLayout';
 import Registro from './pages/auth/Registro';
 import Login from './pages/auth/Login';
+import { AuthContext } from './context/authContext';
+import { useState } from 'react';
 
 
 // const httpLink = createHttpLink({
@@ -19,8 +21,17 @@ const client = new ApolloClient({
 })
 
 function App() {
+  const [authToken,setAuthToken] = useState('');
+
+  const setToken = (token)=>{
+    setAuthToken(token)
+    if(token){
+      localStorage.setItem('token',JSON.stringify(token))
+    }
+  }
   return (
     <ApolloProvider client={client}>
+      <AuthContext.Provider value={{setToken}}>
         <BrowserRouter>
           <Routes>
             <Route path="/usuarios" element={<IndexUsuarios />} />
@@ -31,6 +42,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+      </AuthContext.Provider>
     </ApolloProvider>
 
   );
