@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
+import 'styles/Sidebar.css'
+import logo from 'images/logo.svg'
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../context/authContext';
+import { useAuth } from 'context/authContext';
 import PrivateComponent from './PrivateComponent';
-
 
 const SidebarLinks = () => {
   return (
-    <ul className='mt-12'>
-      <SidebarRoute to='' title='Inicio' icon='fas fa-home' />
+    <div className='sidebar'>
+      <Logo />
+    <ul className='sidebarList'>
+      <SidebarRoute to='/' title='Inicio' icon='fas fa-home' />
       <PrivateComponent roleList={['ADMINISTRADOR']}>
-        <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-user' />
+        <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-user-tag' />
       </PrivateComponent>
-      <SidebarRoute to='/proyectos' title='Proyectos' icon='fas fa-smile-wink' />
+      <SidebarRoute to='/proyectos' title='Proyectos' icon='fas fa-project-diagram' />
       <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
-        <SidebarRoute to='/inscripciones' title='Aprobacion Inscripciones' icon='fas fa-user' />
+        <SidebarRoute to='/inscripciones' title='Inscripciones' icon='fas fa-marker' />
       </PrivateComponent>
-      <SidebarRoute to='/page2' title='Pagina2' icon='fas fa-smile-wink' />
-      <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
-      <SidebarRoute to='/category1/page1' title='Test' icon='fas fa-car' />
+      <SidebarRoute to='/page2' title='Avances' icon='fas fa-tasks' />
       <Logout />
-    </ul>
+    </ul>    
+    </div>
+
   );
 };
 
@@ -30,11 +32,11 @@ const Logout = () => {
     setToken(null);
   };
   return (
-    <li onClick={() => deleteToken()}>
-      <NavLink to='/auth/login' className='sidebar-route text-red-700'>
-        <div className='flex items-center'>
-          <i className='fas fa-sign-out-alt' />
-          <span className='text-sm  ml-2'>Cerrar Sesión</span>
+    <li className='sidebarListRoute' onClick={() => deleteToken()}>
+      <NavLink to='/auth/login' className='sidebarTitle'>
+        <div>
+          <i className='fas fa-sign-out-alt' id='one'/>
+          <span id='two'>Cerrar Sesión</span>
         </div>
       </NavLink>
     </li>
@@ -43,65 +45,45 @@ const Logout = () => {
 
 const Logo = () => {
   return (
-    <div className='py-3 w-full flex flex-col items-center justify-center'>
-      <img src='logo.png' alt='Logo' className='h-16' />
-      <span className='my-2 text-xl font-bold text-center'>Título de Mi Aplicación</span>
+    <div>
+      <img src={logo} alt='Logo'/>
+      <h3 className='title'>SoulWeb</h3>
     </div>
   );
 };
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(true);
+const Sidebar = (props) => {
+  
   return (
-    <div className='flex flex-col md:flex-row flex-no-wrap md:h-full'>
+    <div className='App with-sidebar'>
       {/* Sidebar starts */}
 
-      <div className='sidebar hidden md:flex'>
-        <div className='px-8'>
-          <Logo />
+        <div>
           <SidebarLinks />
         </div>
-      </div>
-      <div className='flex md:hidden w-full justify-between bg-gray-800 p-2 text-white'>
-        <i className={`fas fa-${open ? 'times' : 'bars'}`} onClick={() => setOpen(!open)} />
-        <i className='fas fa-home' />
-      </div>
-      {open && <ResponsiveSidebar />}
-      {/* Sidebar ends */}
-    </div>
-  );
-};
 
-const ResponsiveSidebar = () => {
-  return (
-    <div>
-      <div
-        className='sidebar h-full z-40 absolute md:h-full sm:hidden transition duration-150 ease-in-out'
-        id='mobile-nav'
-      >
-        <div className='px-8'>
-          <Logo />
-          <SidebarLinks />
+        <div>
+          {props.childComponent}
         </div>
-      </div>
+
     </div>
   );
 };
 
 const SidebarRoute = ({ to, title, icon }) => {
   return (
-    <li>
+    <li className='sidebarListRoute'>
       <NavLink
         to={to}
         className={({ isActive }) =>
           isActive
-            ? 'sidebar-route text-white bg-indigo-700'
-            : 'sidebar-route text-gray-900 hover:text-white hover:bg-indigo-400'
+            ? 'sidebarSelected'
+            : 'sidebarTitle'
         }
       >
-        <div className='flex items-center'>
-          <i className={icon} />
-          <span className='text-sm  ml-2'>{title}</span>
+        <div>
+          <i className={icon} id='one'/>
+          <span id='two'>{title}</span>
         </div>
       </NavLink>
     </li>
