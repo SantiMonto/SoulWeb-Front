@@ -134,7 +134,7 @@ const Formulario = () => {
 
                 <div>
                 <span>¿No tienes una cuenta? </span>
-                <Link to='../register'>
+                <Link to='auth/registro'>
                     <span>Registrate</span>
                 </Link>
                 </div>
