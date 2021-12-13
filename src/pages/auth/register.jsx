@@ -203,7 +203,7 @@ const Formulario = () => {
 
                 <div>
                 <span>¿Ya tienes una cuenta? </span>
-                <Link to='/login'>
+                <Link to='../login'>
                     <span>Inicia sesión</span>
                 </Link>
                 </div>
